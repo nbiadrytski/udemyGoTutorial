@@ -12,12 +12,16 @@ import (
 
 func readFromFile(filePath string) []string {
 	f, _ := os.Open(filePath)
+	defer f.Close()
 	r := csv.NewReader(bufio.NewReader(f))
+	r.LazyQuotes = true
 	var urlsSlice []string
 	for {
 		record, err := r.Read()
 		if err == io.EOF {
 			break
+		} else if err != nil {
+			log.Fatal(err)
 		}
 		for value := range record {
 			urlsSlice = append(urlsSlice, record[value])
@@ -39,6 +43,6 @@ func statusCodes(urls []string) {
 }
 
 func main() {
-	urlsSlice := readFromFile("/Users/mikalai_biadrytski/Desktop/new_urls.csv")
+	urlsSlice := readFromFile("new_urls.csv")
 	statusCodes(urlsSlice)
 }
