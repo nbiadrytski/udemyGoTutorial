@@ -5,9 +5,12 @@ import (
 	"encoding/csv"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
+	"strings"
+	"time"
 )
 
 func readFromFile(filePath string) []string {
@@ -30,6 +33,27 @@ func readFromFile(filePath string) []string {
 	return urlsSlice
 }
 
+func checkResponseBody(urls []string) {
+	for value := range urls {
+		resp, err := http.Get("http://media-utils-dev.mtvnservices.com/services/MediaGenerator/" + urls[value] + "?ep=dcc3faa5&device=iPad7,2")
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer resp.Body.Close()
+
+		bodyData, err1 := ioutil.ReadAll(resp.Body)
+		if err1 != nil {
+			log.Fatal(err)
+		}
+
+		checkedString := strings.Contains(string(bodyData), "http://mtvplus-vh.akamaihd.net")
+		if !checkedString {
+			fmt.Println(urls[value])
+			fmt.Println(string(bodyData))
+		}
+	}
+}
+
 func statusCodes(urls []string) {
 	for value := range urls {
 		resp, err := http.Get(urls[value])
@@ -42,7 +66,18 @@ func statusCodes(urls []string) {
 	}
 }
 
+func elapsed(app string) func() {
+	start := time.Now()
+	return func() {
+		fmt.Printf("%s was executed in %v\n", app, time.Since(start))
+	}
+}
+
 func main() {
-	urlsSlice := readFromFile("new_urls.csv")
-	statusCodes(urlsSlice)
+	defer elapsed("app")()
+	//urlsSlice := readFromFile("new_urls.csv")
+	mgidSlice := readFromFile("mtvplus.csv")
+	//statusCodes(urlsSlice)
+	go checkResponseBody(mgidSlice)
+	time.Sleep(time.Second * 2)
 }
