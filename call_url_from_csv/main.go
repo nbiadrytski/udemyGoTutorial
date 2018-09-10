@@ -35,7 +35,7 @@ func readFromFile(filePath string) []string {
 
 func checkResponseBody(urls []string) {
 	for value := range urls {
-		resp, err := http.Get("http://media-utils-dev.mtvnservices.com/services/MediaGenerator/" + urls[value] + "?ep=dcc3faa5&device=iPad7,2")
+		resp, err := http.Get("https://media-utils-uat.mtvnservices.com/services/MediaGenerator/" + urls[value] + "?ep=dcc3faa5&device=iPad7,2")
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -78,6 +78,6 @@ func main() {
 	//urlsSlice := readFromFile("new_urls.csv")
 	mgidSlice := readFromFile("mtvplus.csv")
 	//statusCodes(urlsSlice)
-	go checkResponseBody(mgidSlice)
-	time.Sleep(time.Second * 2)
+	checkResponseBody(mgidSlice)
+	//time.Sleep(time.Second * 2)
 }
