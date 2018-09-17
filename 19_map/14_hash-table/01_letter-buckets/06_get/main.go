@@ -18,6 +18,6 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-
+	// printing slice of bytes as a string
 	fmt.Printf("%s", bs)
 }

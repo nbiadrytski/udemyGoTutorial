@@ -9,6 +9,6 @@ func main() {
 
 func hashFunction(word string, buckets int) int {
 	letter := int(word[0]) // 71
-	bucket := letter % 12
+	bucket := letter % buckets
 	return bucket
 }
