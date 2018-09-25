@@ -75,9 +75,9 @@ func elapsed(app string) func() {
 
 func main() {
 	defer elapsed("app")()
-	//urlsSlice := readFromFile("new_urls.csv")
-	mgidSlice := readFromFile("mtvplus.csv")
-	//statusCodes(urlsSlice)
-	checkResponseBody(mgidSlice)
+	urlsSlice := readFromFile("new_urls.csv")
+	//mgidSlice := readFromFile("mtvplus.csv")
+	statusCodes(urlsSlice)
+	//checkResponseBody(mgidSlice)
 	//time.Sleep(time.Second * 2)
 }
