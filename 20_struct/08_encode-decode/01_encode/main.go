@@ -15,4 +15,5 @@ type person struct {
 func main() {
 	p1 := person{"James", "Bond", 20, 007}
 	json.NewEncoder(os.Stdout).Encode(p1) // {"First":"James","Last":"Bond","Age":20}
+	// writing to Standard Out
 }
