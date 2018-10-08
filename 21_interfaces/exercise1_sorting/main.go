@@ -49,5 +49,5 @@ func main() {
 	fmt.Println("after sorting (slice of ints)", n)
 	sort.Sort(sort.Reverse(sort.IntSlice(n)))
 	fmt.Println("after reverse (slice of ints)", n)
-
+	fmt.Println()
 }
