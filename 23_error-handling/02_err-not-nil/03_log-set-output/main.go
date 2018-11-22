@@ -6,6 +6,7 @@ import (
 	"os"
 )
 
+// errors will be logged to log.txt
 func init() {
 	nf, err := os.Create("log.txt")
 	if err != nil {
